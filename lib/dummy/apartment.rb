@@ -13,15 +13,11 @@ module Dummy
     def self.generate
       @@dic ||=  Psych.load(File.open(YML).read)
 
-      name    = gen_building_name
       address = gen_address
+      name    = gen_building_name
+      geo     = gen_long_lat
 
-      {address: address, building_name: name}
-    end
-
-    def self.gen_building_name
-      names = @@dic['building_name']
-      names['first_half'].sample + names['second_half'].sample
+      {address: address, building_name: name, geo: geo}
     end
 
     def self.gen_address
@@ -32,6 +28,19 @@ module Dummy
       number.gsub!(/\-0|0\-/, '-')
 
       [prefs.sample, cities.sample, number].join
+    end
+
+    def self.gen_building_name
+      names = @@dic['building_name']
+      names['first_half'].sample + names['second_half'].sample
+    end
+
+    def self.gen_long_lat
+      # only around Kanto
+      longitude = rand( 35.668559 ..  37.276341)
+      latitude  = rand(138.419373 .. 140.572693)
+
+      [longitude, latitude]
     end
 
     private_class_method *self.public_methods.grep(/\Agen_/)

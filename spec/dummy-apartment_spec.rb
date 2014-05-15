@@ -12,16 +12,26 @@ describe Dummy::Apartment do
   end
 
   describe 'Building Name' do
-    subject { Dummy::Apartment.generate[:building_name] }
+    let(:name){ Dummy::Apartment.generate[:building_name] }
 
-    it { should_not be_empty }
+    it 'should not be empty' do
+      expect(name).not_to be_empty
+    end
   end
 
   describe 'Address' do
-    subject { Dummy::Apartment.generate[:address] }
+    let(:address){ Dummy::Apartment.generate[:address] }
 
-    it { should match /[都道府県]/ }
-    it { should match /[市町村]/ }
-    it { should match /[0-9]/ }
+    it 'should match address format' do
+      expect(address).to match /[都道府県].+[市町村].*[0-9]/
+    end
+  end
+
+  describe 'Geo' do
+    let(:geo){ Dummy::Apartment.generate[:geo] }
+
+    it 'should be a couple of Float' do
+      expect(geo.map(&:class)).to eql [Float, Float]
+    end
   end
 end
