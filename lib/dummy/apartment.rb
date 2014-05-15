@@ -10,9 +10,9 @@ module Dummy
     NUM      = NON_ZERO + ['0']
     NUM_DASH = NUM + ['-']
 
-    def self.generate
-      @@dic ||=  Psych.load(File.open(YML).read)
+    @@dic ||=  Psych.load(File.open(YML).read)
 
+    def self.generate
       address     = gen_address
       name        = gen_building_name
       geo         = gen_long_lat
