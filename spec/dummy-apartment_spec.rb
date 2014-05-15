@@ -46,4 +46,18 @@ describe Dummy::Apartment do
       expect(room_floor).to be >= 1
     end
   end
+
+  describe 'Room Number' do
+    let(:room_floor) { apartment[:room_floor] }
+    let(:room_number){ apartment[:room_number] }
+
+    it 'should be a three-character string' do
+      expect(room_number).to be_a String
+      expect(room_number.length).to eql 3
+    end
+
+    it 'should be consistent with room floor' do
+      expect(room_number).to start_with room_floor.to_s
+    end
+  end
 end

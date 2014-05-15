@@ -13,15 +13,17 @@ module Dummy
     def self.generate
       @@dic ||=  Psych.load(File.open(YML).read)
 
-      address    = gen_address
-      name       = gen_building_name
-      geo        = gen_long_lat
-      top_floor  = gen_top_floor
-      room_floor = gen_room_floor(top_floor)
+      address     = gen_address
+      name        = gen_building_name
+      geo         = gen_long_lat
+      top_floor   = gen_top_floor
+      room_floor  = gen_room_floor(top_floor)
+      room_number = gen_room_number(room_floor)
 
       {
         address: address, building_name: name, geo: geo,
-        top_floor: top_floor, room_floor: room_floor
+        top_floor: top_floor, room_floor: room_floor,
+        room_number: room_number
       }
     end
 
@@ -54,6 +56,10 @@ module Dummy
 
     def self.gen_room_floor(limit)
       rand(1 .. limit)
+    end
+
+    def self.gen_room_number(floor)
+      "#{floor}0#{rand(0..9)}"
     end
 
     private_class_method *self.public_methods.grep(/\Agen_/)
