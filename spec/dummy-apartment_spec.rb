@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe Dummy::Apartment do
-  let(:apartment) { Dummy::Apartment.generate }
+describe DummyApartment do
+  let(:apartment) { DummyApartment.generate }
 
   it 'should generate a hash' do
     expect(apartment).to be_a Hash
   end
 
   it 'should have no public class method starts with "gen_"' do
-    public_methods = Dummy::Apartment.public_methods(false)
+    public_methods = DummyApartment.public_methods(false)
     expect(public_methods.grep /\Agen_/).to be_empty
   end
 
