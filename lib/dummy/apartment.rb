@@ -13,11 +13,16 @@ module Dummy
     def self.generate
       @@dic ||=  Psych.load(File.open(YML).read)
 
-      address = gen_address
-      name    = gen_building_name
-      geo     = gen_long_lat
+      address    = gen_address
+      name       = gen_building_name
+      geo        = gen_long_lat
+      top_floor  = gen_top_floor
+      room_floor = gen_room_floor(top_floor)
 
-      {address: address, building_name: name, geo: geo}
+      {
+        address: address, building_name: name, geo: geo,
+        top_floor: top_floor, room_floor: room_floor
+      }
     end
 
     def self.gen_address
@@ -41,6 +46,14 @@ module Dummy
       latitude  = rand(138.419373 .. 140.572693)
 
       [longitude, latitude]
+    end
+
+    def self.gen_top_floor
+      rand(2 .. 4)
+    end
+
+    def self.gen_room_floor(limit)
+      rand(1 .. limit)
     end
 
     private_class_method *self.public_methods.grep(/\Agen_/)
