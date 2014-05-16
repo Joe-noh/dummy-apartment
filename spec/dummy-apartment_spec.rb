@@ -94,4 +94,16 @@ describe DummyApartment do
       expect(room_number).to start_with room_floor.to_s
     end
   end
+
+  describe 'Room Type' do
+    let(:room_type){ @apartment[:room_type] }
+
+    it 'should be a String object' do
+      expect(room_type).to be_a String
+    end
+
+    it 'should be match the format' do
+      expect(room_type).to match /\A\d[LDK]{1,3}\z/
+    end
+  end
 end

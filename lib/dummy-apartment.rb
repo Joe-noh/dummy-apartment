@@ -11,7 +11,7 @@ class DummyApartment
 
   @@dic ||=  Psych.load(File.open(YML).read)
 
-  ATTRIBUTES = %i(address building_name geo top_floor room_floor room_number)
+  ATTRIBUTES = %i(address building_name geo top_floor room_floor room_number room_type)
 
   attr_reader *ATTRIBUTES
 
@@ -22,6 +22,7 @@ class DummyApartment
     top_floor     = gen_top_floor
     room_floor    = gen_room_floor(top_floor)
     room_number   = gen_room_number(room_floor)
+    room_type     = gen_room_type
 
     values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
     DummyApartment.new(Hash[ATTRIBUTES.zip values])
@@ -102,6 +103,11 @@ class DummyApartment
 
   def self.gen_room_number(floor)
     "#{floor}0#{rand(0..9)}"
+  end
+
+  def self.gen_room_type
+    types = @@dic['room_type']
+    types.sample
   end
 
   private_class_method *self.public_methods.grep(/\Agen_/)
