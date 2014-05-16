@@ -71,11 +71,12 @@ class DummyApartment
   def self.gen_address
     prefs  = @@dic['prefectures']
     cities = @@dic['cities']
-    number = NON_ZERO.sample
-    number += rand(5).times.select{ NUM_DASH.sample }.join
-    number.gsub!(/\-0|0\-/, '-')
 
-    [prefs.sample, cities.sample, number].join
+    street = NON_ZERO.sample + NUM.sample(rand 1..3).join
+    dash_index = rand(street.length-1)
+    street.insert(dash_index, '-') if dash_index != 0 and dash_index != street.length
+
+    [prefs.sample, cities.sample, street].join
   end
 
   def self.gen_building_name
