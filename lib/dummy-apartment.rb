@@ -11,19 +11,61 @@ class DummyApartment
 
   @@dic ||=  Psych.load(File.open(YML).read)
 
-  def self.generate
-    address     = gen_address
-    name        = gen_building_name
-    geo         = gen_long_lat
-    top_floor   = gen_top_floor
-    room_floor  = gen_room_floor(top_floor)
-    room_number = gen_room_number(room_floor)
+  ATTRIBUTES = %i(address building_name geo top_floor room_floor room_number)
 
-    {
-      address: address, building_name: name, geo: geo,
-      top_floor: top_floor, room_floor: room_floor,
-      room_number: room_number
-    }
+  attr_reader *ATTRIBUTES
+
+  def self.generate
+    address       = gen_address
+    building_name = gen_building_name
+    geo           = gen_long_lat
+    top_floor     = gen_top_floor
+    room_floor    = gen_room_floor(top_floor)
+    room_number   = gen_room_number(room_floor)
+
+    values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
+    DummyApartment.new(Hash[ATTRIBUTES.zip values])
+  end
+
+  def initialize(apartment_hash)
+    @hash = apartment_hash
+    assign_attributes
+  end
+
+  def [](key)
+    case key
+    when String; @hash[key.to_sym]
+    when Symbol; @hash[key]
+    else; raise
+    end
+  end
+
+  def []=(key, value)
+    case key
+    when String; assign(key.to_sym, value)
+    when Symbol; assign(key,        value)
+    else; raise
+    end
+  end
+
+  def assign(key, value)
+    if ATTRIBUTES.member? key
+      @hash[key] = value
+      instance_variable_set("@#{key}".to_sym, value)
+    end
+  end
+
+  ATTRIBUTES.each do |attr|
+    eval <<-RUBY
+      def #{attr}=(value)
+        @hash[:#{attr}] = value
+        @#{attr} = value
+      end
+    RUBY
+  end
+
+  def method_missing(method_name, *args)
+    @hash.send(method_name, *args) if @hash.respond_to? method_name
   end
 
   def self.gen_address
@@ -62,5 +104,13 @@ class DummyApartment
   end
 
   private_class_method *self.public_methods.grep(/\Agen_/)
+
+  private
+
+  def assign_attributes
+    ATTRIBUTES.each do |attr|
+      self.instance_variable_set("@#{attr}".to_sym, @hash[attr])
+    end
+  end
 end
 

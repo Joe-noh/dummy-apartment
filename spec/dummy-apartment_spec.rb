@@ -1,10 +1,44 @@
 require 'spec_helper'
 
 describe DummyApartment do
-  let(:apartment) { DummyApartment.generate }
+  before do
+    @apartment = DummyApartment.generate
+  end
 
-  it 'should generate a hash' do
-    expect(apartment).to be_a Hash
+  it 'should generate a DummyApartment object' do
+    expect(@apartment).to be_a DummyApartment
+  end
+
+  it 'should delegate to Hash' do
+    expect(@apartment.respond_to? :keys).to be_false
+    expect(@apartment.keys).to be_an Array
+  end
+
+  it 'should access the attribute via the method which has same name as the attribute' do
+    expect(@apartment.room_number).to eql @apartment[:room_number]
+    expect(@apartment.address).to     eql @apartment[:address]
+  end
+
+  it 'should access the attribute using both String and Symbol' do
+    expect(@apartment['address']).to eql @apartment.address
+    expect(@apartment[:address]).to  eql @apartment.address
+  end
+
+  it 'should be overwritten its attributes' do
+    @apartment.address = ''
+    expect(@apartment.address).to be_empty
+    @apartment[:address] = 'somewhere'
+    expect(@apartment.address).to eql 'somewhere'
+  end
+
+  it 'should have consistency' do
+    @apartment.address = 'somewhere'
+    expect(@apartment.address).to eql @apartment[:address]
+    expect(@apartment.address).to eql @apartment['address']
+  end
+
+  it 'should raise when pass an argument which is not String or Symbol' do
+    expect { @apartment[0] }.to raise_error
   end
 
   it 'should have no public class method starts with "gen_"' do
@@ -13,7 +47,7 @@ describe DummyApartment do
   end
 
   describe 'Building Name' do
-    let(:name){ apartment[:building_name] }
+    let(:name){ @apartment[:building_name] }
 
     it 'should not be empty' do
       expect(name).not_to be_empty
@@ -21,7 +55,7 @@ describe DummyApartment do
   end
 
   describe 'Address' do
-    let(:address){ apartment[:address] }
+    let(:address){ @apartment[:address] }
 
     it 'should match address format' do
       expect(address).to match /[都道府県].+[市町村].*[0-9]/
@@ -29,7 +63,7 @@ describe DummyApartment do
   end
 
   describe 'Geo' do
-    let(:geo){ apartment[:geo] }
+    let(:geo){ @apartment[:geo] }
 
     it 'should be a couple of Float' do
       expect(geo.map(&:class)).to eql [Float, Float]
@@ -37,8 +71,8 @@ describe DummyApartment do
   end
 
   describe 'Room Floor and Top Floor' do
-    let(:top_floor) { apartment[:top_floor]  }
-    let(:room_floor){ apartment[:room_floor] }
+    let(:top_floor) { @apartment[:top_floor]  }
+    let(:room_floor){ @apartment[:room_floor] }
 
     it 'should have valid floor information' do
       expect( top_floor).to be >= room_floor
@@ -48,8 +82,8 @@ describe DummyApartment do
   end
 
   describe 'Room Number' do
-    let(:room_floor) { apartment[:room_floor] }
-    let(:room_number){ apartment[:room_number] }
+    let(:room_floor) { @apartment[:room_floor] }
+    let(:room_number){ @apartment[:room_number] }
 
     it 'should be a three-character string' do
       expect(room_number).to be_a String
