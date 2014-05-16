@@ -27,14 +27,11 @@ Or just:
     require 'dummy-apartment'
 
     apartment = DummyApartment.generate
-     #=> {:address       => "群馬県長谷市60",
-     #    :building_name => "江頭Petit",
-     #    :geo           => [36.878327083956236, 139.92838722714708],
-     #    :top_floor     => 4,
-     #    :room_floor    => 2,
-     #    :room_number   => "203"}
 
-    apartment.room_floor    #=> 2
+    apartment.address       #=> "群馬県長谷市60"
+    apartment.building_name #=> "石井コーポ"
+    apartment_room_floor    #=> 2
+
     apartment[:room_floor]  #=> 2
     apartment['room_floor'] #=> 2
 
