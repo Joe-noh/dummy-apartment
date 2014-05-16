@@ -1,4 +1,4 @@
-## Dummy::Apartment
+## DummyApartment
 
 This gem generates dummy information of apartment including
 
@@ -24,7 +24,9 @@ Or just:
 
 ### Usage
 
-    DummyApartment.generate
+    require 'dummy-apartment'
+
+    apartment = DummyApartment.generate
      #=> {:address       => "群馬県長谷市60",
      #    :building_name => "江頭Petit",
      #    :geo           => [36.878327083956236, 139.92838722714708],
@@ -32,6 +34,9 @@ Or just:
      #    :room_floor    => 2,
      #    :room_number   => "203"}
 
+    apartment.room_floor    #=> 2
+    apartment[:room_floor]  #=> 2
+    apartment['room_floor'] #=> 2
 
 ### Contributing
 
