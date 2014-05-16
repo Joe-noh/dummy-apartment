@@ -106,4 +106,16 @@ describe DummyApartment do
       expect(room_type).to match /\A\d[LDK]{1,3}\z/
     end
   end
+
+  describe 'Keeping Pets' do
+    let(:keeping_pets){ @apartment[:keeping_pets] }
+
+    it 'should be a String object' do
+      expect(keeping_pets).to be_a String
+    end
+
+    it 'should equal "可", "不可" or "要相談"' do
+      expect(keeping_pets).to match /\A(可|不可|要相談)\z/
+    end
+  end
 end
