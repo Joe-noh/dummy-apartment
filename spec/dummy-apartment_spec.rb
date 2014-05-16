@@ -118,4 +118,16 @@ describe DummyApartment do
       expect(keeping_pets).to match /\A(可|不可|要相談)\z/
     end
   end
+
+  describe 'Playing the Instruments' do
+    let(:playing_the_instruments){ @apartment[:playing_the_instruments] }
+
+    it 'should be a String object' do
+      expect(playing_the_instruments).to be_a String
+    end
+
+    it 'should equal "可" or "不可"' do
+      expect(playing_the_instruments).to match /\A不?可\z/
+    end
+  end
 end
