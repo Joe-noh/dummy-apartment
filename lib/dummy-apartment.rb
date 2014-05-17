@@ -12,7 +12,7 @@ class DummyApartment
   @@dic ||=  Psych.load(File.open(YML).read)
 
   ATTRIBUTES = %i(address building_name geo top_floor room_floor room_number room_type keeping_pets) +
-               %i(playing_the_instruments place_for_washing_machine floor_type)
+               %i(playing_the_instruments place_for_washing_machine floor_type exposure)
 
   attr_reader *ATTRIBUTES
 
@@ -28,6 +28,7 @@ class DummyApartment
     playing_the_instruments   = ['可', '不可'].sample
     place_for_washing_machine = ['室内', '室外', '無し'].sample
     floor_type                = [:flooring, :tatami].sample
+    exposure                  = [:north, :south, :east, :west].sample
 
     values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
     DummyApartment.new(Hash[ATTRIBUTES.zip values])
