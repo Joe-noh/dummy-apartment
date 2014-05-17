@@ -103,7 +103,7 @@ describe DummyApartment do
     end
 
     it 'should be match the format' do
-      expect(room_type).to match /\A\d[LDK]{1,3}\z/
+      expect(room_type).to match /\A\d(R|[LDK]{1,3})\z/
     end
   end
 
