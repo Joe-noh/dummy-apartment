@@ -165,4 +165,16 @@ describe DummyApartment do
       end
     end
   end
+
+  describe 'Exposure' do
+    let(:exposure){ @apartment[:exposure] }
+
+    it 'should be a Symbol' do
+      expect(exposure).to be_a Symbol
+    end
+
+    it 'should be equal :north, :south, :east or :west' do
+      expect([:north, :south, :east, :west]).to include exposure
+    end
+  end
 end
