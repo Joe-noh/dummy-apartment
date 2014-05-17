@@ -12,7 +12,7 @@ class DummyApartment
   @@dic ||=  Psych.load(File.open(YML).read)
 
   ATTRIBUTES = %i(address building_name geo top_floor room_floor room_number room_type keeping_pets) +
-               %i(playing_the_instruments place_for_washing_machine)
+               %i(playing_the_instruments place_for_washing_machine floor_type)
 
   attr_reader *ATTRIBUTES
 
@@ -27,6 +27,7 @@ class DummyApartment
     keeping_pets  = gen_keeping_pets
     playing_the_instruments   = gen_playing_the_instruments
     place_for_washing_machine = gen_place_for_washing_machine
+    floor_type    = gen_floor_type
 
     values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
     DummyApartment.new(Hash[ATTRIBUTES.zip values])
@@ -67,6 +68,14 @@ class DummyApartment
         @#{attr} = value
       end
     RUBY
+  end
+
+  def flooring?
+    @floor_type == :flooring
+  end
+
+  def tatami?
+    @floor_type == :tatami
   end
 
   def method_missing(method_name, *args)
@@ -124,6 +133,10 @@ class DummyApartment
 
   def self.gen_place_for_washing_machine
     ['室内', '室外', '無し'].sample
+  end
+
+  def self.gen_floor_type
+    [:flooring, :tatami].sample
   end
 
   private_class_method *self.public_methods.grep(/\Agen_/)
