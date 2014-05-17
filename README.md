@@ -7,6 +7,10 @@ This gem generates dummy information of apartment including
 * latitude/longitude
 * floor/top
 * room number
+* room type
+* keeping pets
+* playable the musical instruments or not
+* floor type
 
 ### Installation
 
