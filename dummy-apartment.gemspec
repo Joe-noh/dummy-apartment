@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Joe-noh"]
   spec.email         = ["goflb.jh@gmail.com"]
   spec.summary       = %q{Generator of Japanese Apartment Dummy Data}
-  spec.description   = %q{This gem generates dummy information of apartment, including address, name, room number and geo}
+  spec.description   = %q{This gem generates dummy information of apartment, including address, name, room number, geo and more.}
   spec.homepage      = "https://github.com/Joe-noh/dummy-apartment"
   spec.license       = "MIT"
 
