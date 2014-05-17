@@ -17,17 +17,17 @@ class DummyApartment
   attr_reader *ATTRIBUTES
 
   def self.generate
-    address       = gen_address
-    building_name = gen_building_name
-    geo           = gen_long_lat
-    top_floor     = gen_top_floor
-    room_floor    = gen_room_floor(top_floor)
-    room_number   = gen_room_number(room_floor)
-    room_type     = gen_room_type
-    keeping_pets  = gen_keeping_pets
-    playing_the_instruments   = gen_playing_the_instruments
-    place_for_washing_machine = gen_place_for_washing_machine
-    floor_type    = gen_floor_type
+    address                   = gen_address
+    building_name             = gen_building_name
+    geo                       = gen_long_lat
+    top_floor                 = gen_top_floor
+    room_floor                = gen_room_floor(top_floor)
+    room_number               = gen_room_number(room_floor)
+    room_type                 = gen_room_type
+    keeping_pets              = ['可', '不可', '要相談'].sample
+    playing_the_instruments   = ['可', '不可'].sample
+    place_for_washing_machine = ['室内', '室外', '無し'].sample
+    floor_type                = [:flooring, :tatami].sample
 
     values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
     DummyApartment.new(Hash[ATTRIBUTES.zip values])
@@ -121,22 +121,6 @@ class DummyApartment
   def self.gen_room_type
     types = @@dic['room_type']
     types.sample
-  end
-
-  def self.gen_keeping_pets
-    ['可', '不可', '要相談'].sample
-  end
-
-  def self.gen_playing_the_instruments
-    ['可', '不可'].sample
-  end
-
-  def self.gen_place_for_washing_machine
-    ['室内', '室外', '無し'].sample
-  end
-
-  def self.gen_floor_type
-    [:flooring, :tatami].sample
   end
 
   private_class_method *self.public_methods.grep(/\Agen_/)
