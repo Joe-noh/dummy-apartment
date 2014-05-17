@@ -142,4 +142,27 @@ describe DummyApartment do
       expect(place_for_washing_machine).to match /\A(室内|室外|無し)\z/
     end
   end
+
+  describe 'Floor Type' do
+    let(:floor_type){ @apartment[:floor_type] }
+
+    it 'should be a Symbol' do
+      expect(floor_type).to be_a Symbol
+    end
+
+    it 'should equal :flooring or :tatami' do
+      expect([:flooring, :tatami]).to include floor_type
+    end
+
+    it 'should consistent between #floor_type, #tatami? and #flooring?' do
+      case floor_type
+      when :flooring
+        expect(@apartment.flooring?).to be_true
+        expect(@apartment.tatami?).to   be_false
+      when :tatami
+        expect(@apartment.flooring?).to be_false
+        expect(@apartment.tatami?).to   be_true
+      end
+    end
+  end
 end
