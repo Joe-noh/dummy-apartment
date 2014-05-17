@@ -130,4 +130,16 @@ describe DummyApartment do
       expect(playing_the_instruments).to match /\A不?可\z/
     end
   end
+
+  describe 'Place for Washing Machine' do
+    let(:place_for_washing_machine){ @apartment[:place_for_washing_machine] }
+
+    it 'should be a String object' do
+      expect(place_for_washing_machine).to be_a String
+    end
+
+    it 'should equal "室内", "室外" or "無し"' do
+      expect(place_for_washing_machine).to match /\A(室内|室外|無し)\z/
+    end
+  end
 end
