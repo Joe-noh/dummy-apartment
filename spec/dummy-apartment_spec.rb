@@ -211,4 +211,27 @@ describe DummyApartment do
       end
     end
   end
+
+  describe 'Nearest Stations' do
+    let(:nearest_stations){ @apartment[:nearest_stations] }
+
+    it 'should be an Array of Strings' do
+      expect(nearest_stations).to be_an Array
+      expect(nearest_stations.all?{|s| String === s}).to be_true
+    end
+
+    it 'should be an Array whose size is one or two' do
+      100.times do
+        expect(Build.nearest_stations.size).to be_between(1, 2)
+      end
+    end
+
+    describe "Stations' Name" do
+      it "should end with '駅'" do
+        100.times do
+          expect(Build.nearest_stations.all?{|name| name.end_with? '駅'}).to be_true
+        end
+      end
+    end
+  end
 end
