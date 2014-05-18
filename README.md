@@ -11,6 +11,11 @@ This gem generates dummy information of apartment including
 * keeping pets
 * playable the musical instruments or not
 * floor type
+* direction the window facing
+* air conditioner is equipped or not
+* is self-locking door?
+* whether the manager patrols
+* names of closest stations
 
 ### Installation
 
@@ -32,12 +37,17 @@ Or just:
 
     apartment = DummyApartment.generate
 
+    # Get attributes
     apartment.address       #=> "群馬県長谷市60"
     apartment.building_name #=> "石井コーポ"
-    apartment_room_floor    #=> 2
+    apartment.room_floor    #=> 2
 
-    apartment[:room_floor]  #=> 2
-    apartment['room_floor'] #=> 2
+    # Overwrite
+    apartment.building_name = "ハイツ谷川"
+
+    # Convert to Hash
+    apartment.to_hash
+    #=> {address: "群馬県長谷市60", building_name: "ハイツ谷川", ... }
 
 ### Contributing
 
