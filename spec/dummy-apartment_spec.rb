@@ -184,4 +184,31 @@ describe DummyApartment do
       end
     end
   end
+
+  describe 'Air Conditioner' do
+    it 'should be consist between #air_conditioner_equipped and #air_conditioner_equipped?' do
+      100.times do
+        apartment = DummyApartment.generate
+        expect(apartment.air_conditioner_equipped).to eql apartment.air_conditioner_equipped?
+      end
+    end
+  end
+
+  describe 'Self Locking' do
+    it 'should be consist between #self_locking and #self_locking?' do
+      100.times do
+        apartment = DummyApartment.generate
+        expect(apartment.self_locking).to eql apartment.self_locking?
+      end
+    end
+  end
+
+  describe "Manager's Patrol" do
+    it 'should be consist between #manager_patrol and #manager_patrol?' do
+      100.times do
+        apartment = DummyApartment.generate
+        expect(apartment.manager_patrol).to eql apartment.manager_patrol?
+      end
+    end
+  end
 end
