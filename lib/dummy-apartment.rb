@@ -12,7 +12,8 @@ class DummyApartment
   @@dic ||=  Psych.load(File.open(YML).read)
 
   ATTRIBUTES = %i(address building_name geo top_floor room_floor room_number room_type keeping_pets) +
-               %i(playing_the_instruments place_for_washing_machine floor_type exposure)
+               %i(playing_the_instruments place_for_washing_machine floor_type exposure) +
+               %i(air_conditioner_equipped self_locking manager_patrol)
 
   attr_reader *ATTRIBUTES
 
@@ -29,6 +30,9 @@ class DummyApartment
     place_for_washing_machine = ['室内', '室外', '無し'].sample
     floor_type                = [:flooring, :tatami].sample
     exposure                  = [:north, :south, :east, :west].sample
+    air_conditioner_equipped  = gen_true_or_false
+    self_locking              = gen_true_or_false
+    manager_patrol            = gen_true_or_false
 
     values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
     DummyApartment.new(Hash[ATTRIBUTES.zip values])
@@ -79,6 +83,18 @@ class DummyApartment
     @floor_type == :tatami
   end
 
+  def air_conditioner_equipped?
+    @air_conditioner_equipped
+  end
+
+  def self_locking?
+    @self_locking
+  end
+
+  def manager_patrol?
+    @manager_patrol
+  end
+
   def method_missing(method_name, *args)
     @hash.send(method_name, *args) if @hash.respond_to? method_name
   end
@@ -122,6 +138,10 @@ class DummyApartment
   def self.gen_room_type
     types = @@dic['room_type']
     types.sample
+  end
+
+  def self.gen_true_or_false
+    [true, false].sample
   end
 
   private_class_method *self.public_methods.grep(/\Agen_/)
