@@ -15,7 +15,7 @@ class DummyApartment
                %i(playing_the_instruments place_for_washing_machine floor_type exposure) +
                %i(air_conditioner_equipped self_locking manager_patrol nearest_stations)
 
-  attr_reader *ATTRIBUTES
+  attr_accessor *ATTRIBUTES
 
   def self.generate
     address                   = gen_address
@@ -40,40 +40,7 @@ class DummyApartment
   end
 
   def initialize(apartment_hash)
-    @hash = apartment_hash
-    assign_attributes
-  end
-
-  def [](key)
-    case key
-    when String; @hash[key.to_sym]
-    when Symbol; @hash[key]
-    else; raise
-    end
-  end
-
-  def []=(key, value)
-    case key
-    when String; assign(key.to_sym, value)
-    when Symbol; assign(key,        value)
-    else; raise
-    end
-  end
-
-  def assign(key, value)
-    if ATTRIBUTES.member? key
-      @hash[key] = value
-      instance_variable_set("@#{key}".to_sym, value)
-    end
-  end
-
-  ATTRIBUTES.each do |attr|
-    eval <<-RUBY
-      def #{attr}=(value)
-        @hash[:#{attr}] = value
-        @#{attr} = value
-      end
-    RUBY
+    assign_attributes(apartment_hash)
   end
 
   def flooring?
@@ -96,8 +63,8 @@ class DummyApartment
     @manager_patrol
   end
 
-  def method_missing(method_name, *args)
-    @hash.send(method_name, *args) if @hash.respond_to? method_name
+  def to_hash
+    Hash[ATTRIBUTES.map{|attr| [attr, instance_variable_get("@#{attr}")] }]
   end
 
   def self.gen_address
@@ -154,9 +121,9 @@ class DummyApartment
 
   private
 
-  def assign_attributes
+  def assign_attributes(hash)
     ATTRIBUTES.each do |attr|
-      self.instance_variable_set("@#{attr}".to_sym, @hash[attr])
+      self.instance_variable_set("@#{attr}".to_sym, hash[attr])
     end
   end
 end

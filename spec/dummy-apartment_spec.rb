@@ -9,32 +9,29 @@ describe DummyApartment do
     expect(@apartment).to be_a DummyApartment
   end
 
-  it 'should delegate to Hash' do
-    expect(@apartment.respond_to? :keys).to be_false
-    expect(@apartment.keys).to be_an Array
+  describe 'to_hash Method' do
+    it 'should return a Hash object' do
+      expect(@apartment.to_hash).to be_a Hash
+    end
+
+    describe 'The Hash' do
+      it 'should consist with the DummyApartment object' do
+        hash = @apartment.to_hash
+        DummyApartment::ATTRIBUTES.each do |attr|
+          expect(hash[attr]).to eql @apartment.send(attr)
+        end
+
+        @apartment.address = 'somewhere'
+        expect(@apartment.to_hash[:address]).to eql 'somewhere'
+      end
+    end
   end
 
-  it 'should access the attribute via the method which has same name as the attribute' do
-    expect(@apartment.room_number).to eql @apartment[:room_number]
-    expect(@apartment.address).to     eql @apartment[:address]
-  end
-
-  it 'should access the attribute using both String and Symbol' do
-    expect(@apartment['address']).to eql @apartment.address
-    expect(@apartment[:address]).to  eql @apartment.address
-  end
-
-  it 'should be overwritten its attributes' do
-    @apartment.address = ''
-    expect(@apartment.address).to be_empty
-    @apartment[:address] = 'somewhere'
-    expect(@apartment.address).to eql 'somewhere'
-  end
-
-  it 'should have consistency' do
-    @apartment.address = 'somewhere'
-    expect(@apartment.address).to eql @apartment[:address]
-    expect(@apartment.address).to eql @apartment['address']
+  it 'should have the accessor methods' do
+    DummyApartment::ATTRIBUTES.each do |attr|
+      expect(@apartment.respond_to?          attr).to be_true
+      expect(@apartment.respond_to? "#{attr}=").to be_true
+    end
   end
 
   it 'should raise when pass an argument which is not String or Symbol' do
@@ -97,7 +94,7 @@ describe DummyApartment do
   end
 
   describe 'Room Type' do
-    let(:room_type){ @apartment[:room_type] }
+    let(:room_type){ @apartment.room_type }
 
     it 'should be a String object' do
       expect(Build.room_type).to be_a String
@@ -213,7 +210,7 @@ describe DummyApartment do
   end
 
   describe 'Nearest Stations' do
-    let(:nearest_stations){ @apartment[:nearest_stations] }
+    let(:nearest_stations){ @apartment.nearest_stations }
 
     it 'should be an Array of Strings' do
       expect(nearest_stations).to be_an Array
