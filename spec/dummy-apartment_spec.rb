@@ -233,4 +233,30 @@ describe DummyApartment do
       end
     end
   end
+
+  describe 'Minutes to Stations' do
+    let(:minutes_to_stations){ @apartment.minutes_to_stations }
+
+    it 'should be an Array of Hashes' do
+      expect(minutes_to_stations).to be_an Array
+      expect(minutes_to_stations.all?{|h| Hash === h}).to be_true
+    end
+
+    it 'should be an Array the size of which is equal to of nearest_stations' do
+      100.times do
+        nearests, minutes = Build[:nearest_stations, :minutes_to_stations]
+        expect(nearests.size).to eql minutes.size
+      end
+    end
+
+    it 'should have relation on_foot >= by_bus' do
+      100.times do
+        minutes = Build.minutes_to_stations.first
+        on_foot = minutes[:on_foot]
+        by_bus  = minutes[:by_bus]
+
+        expect(on_foot).to be >= by_bus
+      end
+    end
+  end
 end
