@@ -14,7 +14,8 @@ class DummyApartment
 
   ATTRIBUTES = [:address, :building_name, :geo, :top_floor, :room_floor, :room_number, :room_type, :keeping_pets,
                 :playing_the_instruments, :place_for_washing_machine, :floor_type, :exposure,
-                :air_conditioner_equipped, :self_locking, :manager_patrol, :nearest_stations]
+                :air_conditioner_equipped, :self_locking, :manager_patrol, :nearest_stations,
+                :minutes_to_stations]
 
   attr_accessor *ATTRIBUTES
 
@@ -35,6 +36,7 @@ class DummyApartment
     self_locking              = gen_true_or_false
     manager_patrol            = gen_true_or_false
     nearest_stations          = gen_nearest_stations
+    minutes_to_stations       = gen_minutes_to_stations(nearest_stations.size)
 
     values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
     DummyApartment.new(Hash[ATTRIBUTES.zip values])
@@ -116,6 +118,14 @@ class DummyApartment
   def self.gen_nearest_stations
     number = Math.sqrt(rand 1..4).floor  # 1 with 3/4, 2 with 1/4
     @@dic['station'].sample number
+  end
+
+  def self.gen_minutes_to_stations(num_of_stations)
+    num_of_stations.times.with_object([]){ |i, array|
+      on_foot = rand(1 .. 30)
+      by_bus  = rand(1 .. on_foot)
+      array << {on_foot: on_foot, by_bus: by_bus}
+    }
   end
 
   private_class_method *self.public_methods.grep(/\Agen_/)
