@@ -11,9 +11,9 @@ class DummyApartment
 
   @@dic ||=  Psych.load(File.open(YML).read)
 
-  ATTRIBUTES = %i(address building_name geo top_floor room_floor room_number room_type keeping_pets) +
-               %i(playing_the_instruments place_for_washing_machine floor_type exposure) +
-               %i(air_conditioner_equipped self_locking manager_patrol nearest_stations)
+  ATTRIBUTES = [:address, :building_name, :geo, :top_floor, :room_floor, :room_number, :room_type, :keeping_pets,
+                :playing_the_instruments, :place_for_washing_machine, :floor_type, :exposure,
+                :air_conditioner_equipped, :self_locking, :manager_patrol, :nearest_stations]
 
   attr_accessor *ATTRIBUTES
 
