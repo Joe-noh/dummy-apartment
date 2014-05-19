@@ -1,4 +1,6 @@
 ## DummyApartment
+[![Build Status](https://travis-ci.org/Joe-noh/dummy-apartment.png)](https://travis-ci.org/Joe-noh/dummy-apartment)
+[![Gem Version](https://badge.fury.io/rb/dummy-apartment.png)](http://badge.fury.io/rb/dummy-apartment)
 
 This gem generates dummy information of apartment including
 
