@@ -1,5 +1,6 @@
-require "dummy-apartment/version"
+#-*- coding: utf-8 -*-
 
+require "dummy-apartment/version"
 require 'psych'
 
 class DummyApartment
