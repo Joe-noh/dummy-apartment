@@ -112,7 +112,8 @@ class DummyApartment
   end
 
   def self.gen_occupied_area(type)
-    num_rooms = type.chars.first.to_i + type.chars[1..-1].length
+    chars = type.each_char.to_a
+    num_rooms = chars.first.to_i + chars[1..-1].length
     num_rooms*10.0 + rand(-5.0 .. 5.0)
   end
 
