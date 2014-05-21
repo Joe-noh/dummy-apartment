@@ -289,4 +289,40 @@ describe DummyApartment do
       end
     end
   end
+
+  describe 'Date the Building was Built' do
+    it 'should be a Date object' do
+      expect(@apartment.date_of_construction).to be_a Date
+    end
+
+    it 'should be newer than Jan 1 1960' do
+      100.times do
+        diff = Build.date_of_construction - Date.new(1960, 1, 1)
+        expect(diff).to be >= 0
+      end
+    end
+  end
+
+  describe 'Date of Renovation' do
+    it 'should be newer than the date of construction' do
+      100.times do
+        apartment = DummyApartment.generate
+        if apartment.renovated?
+          diff = apartment.date_of_renovation - apartment.date_of_construction
+          expect(diff).to be >= 0
+        end
+      end
+    end
+
+    it 'should be consist with #renovated?' do
+      100.times do
+        apartment = DummyApartment.generate
+        if apartment.renovated?
+          expect(apartment.date_of_renovation).to be_a Date
+        else
+          expect(apartment.date_of_renovation).to be_nil
+        end
+      end
+    end
+  end
 end
