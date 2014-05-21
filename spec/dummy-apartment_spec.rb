@@ -325,4 +325,42 @@ describe DummyApartment do
       end
     end
   end
+
+  describe 'Monthly Rent' do
+    it 'should be between 15000 and 305000' do
+      100.times do
+        expect(15000 .. 345000).to include Build.monthly_rent
+      end
+    end
+  end
+
+  describe 'Management Fee' do
+    it 'should be less than or equal to 10000' do
+      expect(Build.management_fee).to be <= 10000
+    end
+  end
+
+  describe 'Parking Price' do
+    it 'should be less than or equal to 10000' do
+      expect(Build.management_fee).to be <= 10000
+    end
+  end
+
+  describe 'Deposit' do
+    it 'should be less than or equal to 2*monthly_rent' do
+      100.times do
+        rent, fee = Build[:monthly_rent, :management_fee]
+        expect(fee).to be <= 2*rent
+      end
+    end
+  end
+
+  describe "Finder's Reward" do
+    it 'should be less than or equal to 2*monthly_rent' do
+      100.times do
+        rent, reward = Build[:monthly_rent, :finders_reward]
+        expect(reward).to be <= 2*rent
+      end
+    end
+  end
 end

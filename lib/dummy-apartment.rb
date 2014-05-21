@@ -13,7 +13,8 @@ class DummyApartment
                 :keeping_pets, :playing_the_instruments, :place_for_washing_machine, :floor_type,
                 :exposure, :air_conditioner_equipped, :self_locking, :manager_patrol, :nearest_stations,
                 :minutes_to_stations, :occupied_area, :bath_toilet_separated, :date_of_construction,
-                :date_of_renovation]
+                :date_of_renovation, :monthly_rent, :management_fee, :parking_price, :deposit,
+                :finders_reward]
 
   attr_accessor *ATTRIBUTES
 
@@ -39,6 +40,11 @@ class DummyApartment
     bath_toilet_separated     = gen_true_or_false
     date_of_construction      = gen_date_of_construction
     date_of_renovation        = gen_date_of_renovation(date_of_construction)
+    monthly_rent              = gen_monthly_rent(occupied_area)
+    management_fee            = gen_management_fee
+    parking_price             = gen_parking_price
+    deposit                   = gen_deposit(monthly_rent)
+    finders_reward            = gen_finders_reward(monthly_rent)
 
     values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
     DummyApartment.new(Hash[ATTRIBUTES.zip values])
@@ -153,6 +159,29 @@ class DummyApartment
 
   def self.gen_date_of_renovation(older_limit)
     [true, false].sample ? rand(older_limit .. Date.today) : nil
+  end
+
+  def self.gen_monthly_rent(occupied_area)
+    # base(15m^2) ==  20000
+    # base(65^m2) == 340000
+    base = 80*occupied_area**2 + 2000
+    base.round(-3) + rand(-5 .. 5)*1000
+  end
+
+  def self.gen_management_fee
+    rand(0 .. 10) * 1000
+  end
+
+  def self.gen_parking_price
+    rand(0 .. 10) * 1000
+  end
+
+  def self.gen_deposit(monthly_rent)
+    [0, 1, 1, 1, 1, 2].sample * monthly_rent
+  end
+
+  def self.gen_finders_reward(monthly_rent)
+    [0, 1, 1, 1, 1, 2].sample * monthly_rent
   end
 
   private_class_method *self.public_methods.grep(/\Agen_/)
