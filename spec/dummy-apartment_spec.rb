@@ -280,4 +280,13 @@ describe DummyApartment do
       end
     end
   end
+
+  describe 'Bath and Toilet' do
+    it 'should be consist between #bath_toilet_separated and #bath_toilet_separated?' do
+      100.times do
+        apartment = DummyApartment.generate
+        expect(apartment.bath_toilet_separated).to eql apartment.bath_toilet_separated?
+      end
+    end
+  end
 end
