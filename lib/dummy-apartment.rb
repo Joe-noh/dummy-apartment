@@ -1,14 +1,10 @@
 #-*- coding: utf-8 -*-
 
-require "dummy-apartment/version"
 require 'psych'
 
 class DummyApartment
+  VERSION = "0.1.0"
   YML = File.expand_path('../data.yml', __FILE__)
-
-  NON_ZERO = (1..9).to_a.map(&:to_s)
-  NUM      = NON_ZERO + ['0']
-  NUM_DASH = NUM + ['-']
 
   @@dic ||=  Psych.load(File.open(YML).read)
 
@@ -74,7 +70,10 @@ class DummyApartment
     prefs  = @@dic['prefectures']
     cities = @@dic['cities']
 
-    street = NON_ZERO.sample + NUM.sample(rand 1..3).join
+    non_zero = (1..9).to_a.map(&:to_s)
+    numbers  = (0..9).to_a.map(&:to_s)
+
+    street = non_zero.sample + numbers.sample(rand 1..3).join
     dash_index = rand(street.length-1)
     street.insert(dash_index, '-') if dash_index != 0 and dash_index != street.length
 
