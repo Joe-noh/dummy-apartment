@@ -109,6 +109,27 @@ describe DummyApartment do
     end
   end
 
+  describe 'Occupied Area' do
+    it 'should be correspond to room_type' do
+      100.times do
+        type, area = Build[:room_type, :occupied_area]
+        range = case type
+                when '1R';   (15.0 .. 25.0)
+                when '1K';   (15.0 .. 25.0)
+                when '1DK';  (25.0 .. 35.0)
+                when '1LDK'; (35.0 .. 45.0)
+                when '2K';   (25.0 .. 35.0)
+                when '2DK';  (35.0 .. 45.0)
+                when '2LDK'; (45.0 .. 55.0)
+                when '3K';   (35.0 .. 45.0)
+                when '3DK';  (45.0 .. 55.0)
+                when '3LDK'; (55.0 .. 65.0)
+                end
+        expect(range).to include area
+      end
+    end
+  end
+
   describe 'Keeping Pets' do
     it 'should be a String object' do
       expect(Build.keeping_pets).to be_a String

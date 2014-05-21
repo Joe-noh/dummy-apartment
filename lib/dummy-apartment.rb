@@ -11,7 +11,7 @@ class DummyApartment
   ATTRIBUTES = [:address, :building_name, :geo, :top_floor, :room_floor, :room_number, :room_type, :keeping_pets,
                 :playing_the_instruments, :place_for_washing_machine, :floor_type, :exposure,
                 :air_conditioner_equipped, :self_locking, :manager_patrol, :nearest_stations,
-                :minutes_to_stations]
+                :minutes_to_stations, :occupied_area]
 
   attr_accessor *ATTRIBUTES
 
@@ -23,6 +23,7 @@ class DummyApartment
     room_floor                = gen_room_floor(top_floor)
     room_number               = gen_room_number(room_floor)
     room_type                 = gen_room_type
+    occupied_area             = gen_occupied_area(room_type)
     keeping_pets              = ['可', '不可', '要相談'].sample
     playing_the_instruments   = ['可', '不可'].sample
     place_for_washing_machine = ['室内', '室外', '無し'].sample
@@ -108,6 +109,11 @@ class DummyApartment
   def self.gen_room_type
     types = @@dic['room_type']
     types.sample
+  end
+
+  def self.gen_occupied_area(type)
+    num_rooms = type.chars.first.to_i + type.chars[1..-1].length
+    num_rooms*10.0 + rand(-5.0 .. 5.0)
   end
 
   def self.gen_true_or_false
