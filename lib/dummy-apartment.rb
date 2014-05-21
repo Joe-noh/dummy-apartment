@@ -11,7 +11,7 @@ class DummyApartment
   ATTRIBUTES = [:address, :building_name, :geo, :top_floor, :room_floor, :room_number, :room_type, :keeping_pets,
                 :playing_the_instruments, :place_for_washing_machine, :floor_type, :exposure,
                 :air_conditioner_equipped, :self_locking, :manager_patrol, :nearest_stations,
-                :minutes_to_stations, :occupied_area]
+                :minutes_to_stations, :occupied_area, :bath_toilet_separated]
 
   attr_accessor *ATTRIBUTES
 
@@ -34,6 +34,7 @@ class DummyApartment
     manager_patrol            = gen_true_or_false
     nearest_stations          = gen_nearest_stations
     minutes_to_stations       = gen_minutes_to_stations(nearest_stations.size)
+    bath_toilet_separated     = gen_true_or_false
 
     values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
     DummyApartment.new(Hash[ATTRIBUTES.zip values])
@@ -61,6 +62,10 @@ class DummyApartment
 
   def manager_patrol?
     @manager_patrol
+  end
+
+  def bath_toilet_separated?
+    @bath_toilet_separated
   end
 
   def to_hash
