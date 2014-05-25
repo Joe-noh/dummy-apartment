@@ -363,4 +363,40 @@ describe DummyApartment do
       end
     end
   end
+
+  describe 'Fixed Term Lease' do
+    it 'should be equal to #fixed_term_lease?' do
+      100.times do
+        apartment = DummyApartment.generate
+        expect(apartment.fixed_term_lease).to eql apartment.fixed_term_lease?
+      end
+    end
+
+    describe 'Lease Term' do
+      it 'should be between 1 and 3' do
+        100.times do
+          apartment = DummyApartment.generate
+          if apartment.fixed_term_lease?
+            expect(apartment.lease_term).to be_between(1, 3)
+          else
+            expect(apartment.lease_term).to be_nil
+          end
+        end
+      end
+    end
+
+    describe 'Renewal Fee' do
+      it 'should be between monthly_fee and 3*monthly_rent' do
+        100.times do
+          apartment = DummyApartment.generate
+          if apartment.fixed_term_lease?
+            candidates = (1..3).map { |i| i * apartment.monthly_rent }
+            expect(candidates).to include apartment.renewal_fee
+          else
+            expect(apartment.renewal_fee).to be_nil
+          end
+        end
+      end
+    end
+  end
 end
