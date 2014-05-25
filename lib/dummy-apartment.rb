@@ -4,7 +4,7 @@ require 'psych'
 require 'date'
 
 class DummyApartment
-  VERSION = "0.1.1"
+  VERSION = "0.2.0"
   YML = File.expand_path('../data.yml', __FILE__)
 
   @@dic ||=  Psych.load(File.open(YML).read)
@@ -14,7 +14,7 @@ class DummyApartment
                 :exposure, :air_conditioner_equipped, :self_locking, :manager_patrol, :nearest_stations,
                 :minutes_to_stations, :occupied_area, :bath_toilet_separated, :date_of_construction,
                 :date_of_renovation, :monthly_rent, :management_fee, :parking_price, :deposit,
-                :finders_reward]
+                :finders_reward, :fixed_term_lease, :lease_term, :renewal_fee]
 
   attr_accessor *ATTRIBUTES
 
@@ -45,6 +45,9 @@ class DummyApartment
     parking_price             = gen_parking_price
     deposit                   = gen_deposit(monthly_rent)
     finders_reward            = gen_finders_reward(monthly_rent)
+    fixed_term_lease          = gen_true_or_false
+    lease_term                = gen_lease_term(fixed_term_lease)
+    renewal_fee               = gen_renewal_fee(fixed_term_lease, monthly_rent)
 
     values = ATTRIBUTES.map{ |attr| eval "#{attr}" }
     DummyApartment.new(Hash[ATTRIBUTES.zip values])
@@ -80,6 +83,10 @@ class DummyApartment
 
   def renovated?
     !@date_of_renovation.nil?
+  end
+
+  def fixed_term_lease?
+    @fixed_term_lease
   end
 
   def to_hash
@@ -182,6 +189,16 @@ class DummyApartment
 
   def self.gen_finders_reward(monthly_rent)
     [0, 1, 1, 1, 1, 2].sample * monthly_rent
+  end
+
+  def self.gen_lease_term(fixed)
+    return nil unless fixed
+    rand(1 .. 3)
+  end
+
+  def self.gen_renewal_fee(fixed, monthly_rent)
+    return nil unless fixed
+    rand(1 .. 3) * monthly_rent
   end
 
   private_class_method *self.public_methods.grep(/\Agen_/)
