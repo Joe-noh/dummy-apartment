@@ -18,6 +18,21 @@ This gem generates dummy information of apartment including
 * is self-locking door?
 * whether the manager patrols
 * names of closest stations
+* minutes to reach the stations
+  * on foot
+  * by bus
+* whether bath and toilet are in different rooms
+* date of
+  * construction
+  * renovation
+* monthly rent
+* monthly management fee
+* monthly parking price
+* deposit money
+* finder's reward
+* leasing term is fixed or not
+  * the term if it's fixed
+  * renewal fee if it's fixed
 
 ### Installation
 
@@ -50,6 +65,43 @@ Or just:
     # Convert to Hash
     apartment.to_hash
     #=> {address: "群馬県長谷市60", building_name: "ハイツ谷川", ... }
+
+#### Instance Methods
+
+* `address`
+* `building_name`
+* `geo`
+* `top_floor`
+* `room_floor`
+* `room_number`
+* `room_type`
+* `occupied_area`
+* `keeping_pets`
+* `playing_the_instruments`
+* `place_for_washing_machine`
+* `floor_type`
+* `flooring?`
+* `tatami?`
+* `exposure`
+* `air_conditioner_equipped?`
+* `self_locking?`
+* `manager_patrol?`
+* `nearest_stations`
+* `minutes_to_stations`
+* `bath_toilet_separated?`
+* `date_of_construction`
+* `renovated?`
+* `date_of_renovation`
+* `monthly_rent`
+* `management_fee`
+* `parking_price`
+* `deposit`
+* `finders_reward`
+* `fixed_term_lease?`
+* `lease_term`
+* `renewal_fee`
+* `to_hash`
+
 
 ### Contributing
 
