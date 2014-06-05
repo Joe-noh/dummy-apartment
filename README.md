@@ -18,6 +18,21 @@ This gem generates dummy information of apartment including
 * is self-locking door?
 * whether the manager patrols
 * names of closest stations
+* minutes to reach the stations
+  * on foot
+  * by bus
+* whether bath and toilet are in different rooms
+* date of
+  * construction
+  * renovation
+* monthly rent
+* monthly management fee
+* monthly parking price
+* deposit money
+* finder's reward
+* leasing term is fixed or not
+  * the term if it's fixed
+  * renewal fee if it's fixed
 
 ### Installation
 
