@@ -66,6 +66,43 @@ Or just:
     apartment.to_hash
     #=> {address: "群馬県長谷市60", building_name: "ハイツ谷川", ... }
 
+#### Instance Methods
+
+* `address`
+* `building_name`
+* `geo`
+* `top_floor`
+* `room_floor`
+* `room_number`
+* `room_type`
+* `occupied_area`
+* `keeping_pets`
+* `playing_the_instruments`
+* `place_for_washing_machine`
+* `floor_type`
+* `flooring?`
+* `tatami?`
+* `exposure`
+* `air_conditioner_equipped?`
+* `self_locking?`
+* `manager_patrol?`
+* `nearest_stations`
+* `minutes_to_stations`
+* `bath_toilet_separated?`
+* `date_of_construction`
+* `renovated?`
+* `date_of_renovation`
+* `monthly_rent`
+* `management_fee`
+* `parking_price`
+* `deposit`
+* `finders_reward`
+* `fixed_term_lease?`
+* `lease_term`
+* `renewal_fee`
+* `to_hash`
+
+
 ### Contributing
 
 1. Fork it ( https://github.com/Joe-noh/dummy-apartment/fork )
