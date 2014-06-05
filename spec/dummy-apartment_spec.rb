@@ -31,8 +31,8 @@ describe DummyApartment do
 
   it 'should have the accessor methods' do
     DummyApartment::ATTRIBUTES.each do |attr|
-      expect(@apartment.respond_to?          attr).to be_true
-      expect(@apartment.respond_to? "#{attr}=").to be_true
+      expect(@apartment.respond_to?          attr).to be_truthy
+      expect(@apartment.respond_to? "#{attr}=").to be_truthy
     end
   end
 
@@ -183,11 +183,11 @@ describe DummyApartment do
 
         case apartment.floor_type
         when :flooring
-          expect(apartment.flooring?).to be_true
-          expect(apartment.tatami?).to   be_false
+          expect(apartment.flooring?).to be_truthy
+          expect(apartment.tatami?).to   be_falsey
         when :tatami
-          expect(apartment.flooring?).to be_false
-          expect(apartment.tatami?).to   be_true
+          expect(apartment.flooring?).to be_falsey
+          expect(apartment.tatami?).to   be_truthy
         end
       end
     end
@@ -237,7 +237,7 @@ describe DummyApartment do
 
     it 'should be an Array of Strings' do
       expect(nearest_stations).to be_an Array
-      expect(nearest_stations.all?{|s| String === s}).to be_true
+      expect(nearest_stations.all?{|s| String === s}).to be_truthy
     end
 
     it 'should be an Array whose size is one or two' do
@@ -249,7 +249,7 @@ describe DummyApartment do
     describe "Stations' Name" do
       it "should end with '駅'" do
         100.times do
-          expect(Build.nearest_stations.all?{|name| name.end_with? '駅'}).to be_true
+          expect(Build.nearest_stations.all?{|name| name.end_with? '駅'}).to be_truthy
         end
       end
     end
@@ -260,7 +260,7 @@ describe DummyApartment do
 
     it 'should be an Array of Hashes' do
       expect(minutes_to_stations).to be_an Array
-      expect(minutes_to_stations.all?{|h| Hash === h}).to be_true
+      expect(minutes_to_stations.all?{|h| Hash === h}).to be_truthy
     end
 
     it 'should be an Array the size of which is equal to of nearest_stations' do
