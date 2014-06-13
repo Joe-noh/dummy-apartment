@@ -4,7 +4,7 @@ require 'psych'
 require 'date'
 
 class DummyApartment
-  VERSION = "0.2.0"
+  VERSION = "0.2.1"
   YML = File.expand_path('../data.yml', __FILE__)
 
   @@dic ||=  Psych.load(File.open(YML).read)
